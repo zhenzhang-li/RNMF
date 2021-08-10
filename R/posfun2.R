@@ -1,0 +1,40 @@
+posfun2 = function(p1,length,k,axis=NULL)
+{
+  if(!is.null(axis)){
+    pos=NULL
+    y0=p1[2]
+    x0=p1[1]
+    b=y0-k*x0
+    A=1+k^2
+    B=2*k*b-2*x0-2*y0*k
+    C=x0^2+b^2-2*y0*b+y0^2-length^2
+    if(is.na(A)|!is.finite(A)|is.null(A)){
+      A=1
+    }
+    if(is.na(B)|!is.finite(B)|is.null(B)){
+      B=0
+    }  
+    if(is.na(C)|!is.finite(C)|is.null(C)){
+      C=0
+    }  
+    if(B^2-4*A*C<0){
+      stop("Equations have no solution!")
+    }
+    ksqrt=sqrt(B^2-4*A*C)
+    x1=c((-B-ksqrt)/(2*A),(-B+ksqrt)/(2*A))
+    if(axis=='x'){
+      ix=x1<=x0
+      pos[1]=x1[ix]
+    }
+    if(axis=='y'){
+      ix=x1>=x0
+      pos[1]=x1[ix]     
+    }
+    if(axis=='z'){
+      ix=x1<=x0
+      pos[1]=x1[ix]     
+    }  
+    pos[2]=k*pos[1]+b
+    return(pos)
+  }
+}
