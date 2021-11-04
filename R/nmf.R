@@ -1,4 +1,4 @@
-nmf <- function(v, r, eps, alpha, beta)
+nmf <- function(v, r, eps, alpha, beta, nlmvalue)
 {
   if(is.data.frame(v))
   {
@@ -27,13 +27,16 @@ nmf <- function(v, r, eps, alpha, beta)
   if(is.vector(h))
   {
     h = t(h)
-  }      
-  xin = c(as.vector(w), as.vector(h))
-  res = nlm(fobjective, xin, r, n, m, v, beta, alpha, gradtol = 1e-4, stepmax = 1000, steptol = 1e-4, iterlim = 100) 
-  xin = abs(res$estimate)
-  xin[xin<eps] = eps
-  w = matrix(xin[1:(n*r)], n, r)  
-  h = matrix(xin[-c(1:(n*r))], r, m)  
+  }
+  if(nlmvalue)
+  {
+	xin = c(as.vector(w), as.vector(h))
+	res = nlm(fobjective, xin, r, n, m, v, beta, alpha, gradtol = 1e-4, stepmax = 1000, steptol = 1e-4, iterlim = 100) 
+	xin = abs(res$estimate)
+	xin[xin<eps] = eps
+	w = matrix(xin[1:(n*r)], n, r)  
+	h = matrix(xin[-c(1:(n*r))], r, m) 
+  }   
   w = normalize(w) 
   h = normalize(h)  
   niter = 20000  
