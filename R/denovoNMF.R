@@ -1,4 +1,4 @@
-denovoNMF = function(originalGenomes, sampleNames, subtypes, AnalCOSMICSigType = 'SBS', kmin = 1, kmax = 10, steptol = 10^-9, totalIterations = 20, spacetime = 100, mc.cores = 1)
+denovoNMF = function(originalGenomes, sampleNames, subtypes, AnalCOSMICSigType = 'SBS', kmin = 1, kmax = 10, steptol = 10^-9, totalIterations = 20, spacetime = 100, nlm = FALSE, mc.cores = 1)
 {
   library( data.table )
   library( MCMCpack )
@@ -43,7 +43,7 @@ denovoNMF = function(originalGenomes, sampleNames, subtypes, AnalCOSMICSigType =
 		  istepNUM = 1
 		  while(istepNUM)
 		  {
-			res = mclapply(xtmp, extractparallel, Y, totalIterations, totalProcesses, alpha, beta, eps, mc.cores = mc.cores) 
+			res = mclapply(xtmp, extractparallel, Y, totalIterations, totalProcesses, alpha, beta, eps, nlm, mc.cores = mc.cores) 
 			for( i in xtmp )
 			{ 
 				Pall[[i]] = res[[i]]$P
