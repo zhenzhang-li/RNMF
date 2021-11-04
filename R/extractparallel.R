@@ -1,4 +1,4 @@
-extractparallel = function(i, genomes, totalIterations, totalProcesses, alpha, beta, eps)
+extractparallel = function(i, genomes, totalIterations, totalProcesses, alpha, beta, eps, nlm)
 {
   removeWeakMutationTypes = 0.001   
   index = apply(genomes, 1, sum)/sum(genomes) < removeWeakMutationTypes
@@ -11,7 +11,7 @@ extractparallel = function(i, genomes, totalIterations, totalProcesses, alpha, b
   dirichletGenomes[is.infinite(dirichletGenomes)] = 10^abs(log10(eps))
   dirichletGenomes[dirichletGenomes<eps] = eps
   dirichletGenomes = normalize(dirichletGenomes)    
-  res = nmf(dirichletGenomes, totalProcesses, eps, alpha, beta) 
+  res = nmf(dirichletGenomes, totalProcesses, eps, alpha, beta, nlm) 
   E = dirichletGenomes - res$P%*%res$S
   return(list('P'=res$P,'S'=res$S,'E'=E))
 }
