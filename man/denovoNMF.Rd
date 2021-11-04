@@ -11,7 +11,7 @@
 	We present an optimized non-Negative Matrix Factorisation (NMF) based on R to extract the mutational singature in cancer research.
 }
 \usage{
-	denovoNMF(originalGenomes, sampleNames, subtypes, kmin = 1, kmax = 10, AnalCOSMICSigType = 'SBS', steptol = 10^-9, totalIterations = 20, spacetime = 100, mc.cores = 1)	
+	denovoNMF(originalGenomes, sampleNames, subtypes, kmin = 1, kmax = 10, AnalCOSMICSigType = 'SBS', steptol = 10^-9, totalIterations = 20, spacetime = 100, nlm = FALSE, mc.cores = 1)	
 }
 \arguments{
   \item{originalGenomes}{
@@ -41,6 +41,9 @@
   \item{spacetime}{
 	The length of definite solution space of NMF, must be at least 20.
 }
+  \item{nlm}{
+	Straighten the result to calculate the optimal solution. Default FALSE.
+}
   \item{mc.cores}{
 	The number of cores to use, i.e. at most how many child processes will be run simultaneously. Must be exactly 1 on Windows (which uses the master process).
 }
@@ -49,5 +52,5 @@
 	Wen Luo(design, implementation, testing), Zhenzhang Li(design)
 }
 \examples{
-	denovoNMF('originalGenomes', 'sampleNames', 'subtypes', kmin = 1, kmax = 10, AnalCOSMICSigType = 'SBS', steptol = 10^-9, totalIterations = 20, spacetime = 100, mc.cores = 20)
+	denovoNMF('originalGenomes', 'sampleNames', 'subtypes', kmin = 1, kmax = 10, AnalCOSMICSigType = 'SBS', steptol = 10^-9, totalIterations = 20, spacetime = 100, nlm = TRUE, mc.cores = 20)
 }
