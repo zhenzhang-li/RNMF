@@ -60,3 +60,6 @@ for(isig in Sigstype)
                  sample.id = 'Tumor_Sample_Barcode', Hugo = 'Hugo_Symbol', 
                  Mutfreq = 0.04, threshold = 0.06, Qvalue = 0.1, plot = TRUE) 
 }
+
+# Result
+![lego](http://m.qpic.cn/psc?/V53vEq5F3gyvJk3g2XrK3cjeBv1WZzrh/TmEUgtj9EK6.7V8ajmQrEDBEzeC5KR9d7rIyJ9dVHeZK7qoqxvjm.PynUSyvUD831wN4*g0BrPoQUCgiIgu2y1jBUldvbKf8ymfE5y4usFM!/b&bo=jwVvAwAAAAADN*Q!&rf=viewer_4)
