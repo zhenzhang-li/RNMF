@@ -1,18 +1,17 @@
-fd = function (x1, x2, nsim = 10000) 
+fd = function(x1, x2, nsim = 10000) 
 {
-    n1 <- length(x1)
-    n2 <- length(x2)
-    n <- n1 + n2
-    x <- c(x1, x2)
-    dbar <- mean(x2) - mean(x1)
-    z <- array(, nsim)
-    for (i in 1:nsim) 
+    library(Deducer)
+    ntol = 21
+    pval = rep(NA, ntol)
+    for(ij in 1:ntol)
     {
-      mn <- sample(n, n2, replace = FALSE)
-      dbardash <- mean(x[mn]) - mean(x[-mn])
-      z[i] <- dbardash
+        a = perm.t.test(x1, x2, midp = TRUE, B = nsim)
+        if(is.finite(a$p.value))
+        {
+            pval[ij] <- a$p.value  
+        }    
     }
-    pval <- (sum(z >= abs(dbar)) + sum(z <= -abs(dbar)))/nsim
+    pval = max(pval, na.rm = TRUE)
     return(pval)
 }
 
