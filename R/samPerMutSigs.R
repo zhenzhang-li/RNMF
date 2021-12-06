@@ -1,15 +1,23 @@
 fd = function(x1, x2, nsim = 10000) 
 {
-    library(Deducer)
+	library(Deducer)
     ntol = 21
-    pval = rep(NA, ntol)
+	pval = rep(NA, ntol)
+	x1l = length(x1)
+	x2l = length(x2)
+	if(x1l == 1 | x2l == 1)
+	{
+		statistic = "mean"
+	}else{
+		statistic = "t"
+	}
     for(ij in 1:ntol)
     {
-        a = perm.t.test(x1, x2, midp = TRUE, B = nsim)
-        if(is.finite(a$p.value))
-        {
-            pval[ij] <- a$p.value  
-        }    
+		a = perm.t.test(x1, x2, statistic = statistic, midp = TRUE, B = nsim)
+		if(is.finite(a$p.value))
+		{
+			pval[ij] <- a$p.value  
+		}    
     }
     pval = max(pval, na.rm = TRUE)
     return(pval)
