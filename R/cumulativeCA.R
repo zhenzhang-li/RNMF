@@ -64,10 +64,10 @@ cumulativeCA = function (file = NULL, Filetype = c("MAF", "VCF"), Pfile = NULL,
     samMatrixsigsData = samMatrixsigsDatatmp
     geneMatrixNumData = geneMatrixNumDatatmp
     rm("geneMatrixNumDatatmp", "samMatrixsigsDatatmp")
-    if (is.null(groupFile)) {
+    if (is.null(groupFile))
+	{
         group = as.data.frame(cbind(Samples, "All"))
-    }
-    else {
+    }else{
         library(data.table)
         group = as.data.frame(fread(groupFile))
         index = NULL
@@ -100,8 +100,7 @@ cumulativeCA = function (file = NULL, Filetype = c("MAF", "VCF"), Pfile = NULL,
     id_sam = 1
     geneListtmp = mut[, c(Hugo, chr)]
     data(knownGene)
-    geneList1 = unique(merge(geneListtmp, knownGene, by = 1:2, 
-        all.x = TRUE, sort = FALSE))
+    geneList1 = unique(merge(geneListtmp, knownGene, by = 1:2, all.x = TRUE, sort = FALSE))
     colnames(geneList1) = c(Hugo, chr, "Length")
     GinNs = intersect(geneList[, Hugo], geneList1[, Hugo])
     allGnames = colnames(geneMatrixNumData$samGeneMatrix[[1]])
@@ -109,11 +108,11 @@ cumulativeCA = function (file = NULL, Filetype = c("MAF", "VCF"), Pfile = NULL,
     geneListtmp1 = geneList[!ix, ]
     ix = is.na(geneList1$Length) | grepl("_", geneList1[, chr])
     geneList1tmp1 = geneList1[!ix, ]
-    GinNs1 = intersect(geneListtmp1[, Hugo], geneList1tmp1[, 
-        Hugo])
+    GinNs1 = intersect(geneListtmp1[, Hugo], geneList1tmp1[, Hugo])
     InNs = intersect(allGnames, geneList1tmp1[, Hugo])
     rownames(geneList1tmp1) = geneList1tmp1[, Hugo]
-    for (i in 1:ngl) {
+    for (i in 1:ngl)
+	{
         dir.create(paste("samplesResults/image_", ngs[i], sep = ""), 
             showWarnings = FALSE, recursive = TRUE, mode = "0777")
         dir.create(paste("samplesResults/image_relative_", ngs[i], 
@@ -278,14 +277,14 @@ cumulativeCA = function (file = NULL, Filetype = c("MAF", "VCF"), Pfile = NULL,
     nSigs = ncol(samMatrixDateRes$theta[[1]])
     SigIDs = colnames(samMatrixDateRes$theta[[1]])
     geneIDs = rownames(samMatrixDateRes$theta[[1]])
-    for (i in 1:nSigs) {
+	geneIDs1 = rownames(samMatrixDateRes$gamma[[1]])
+    for (i in 1:nSigs)
+	{
         dataMatrix0 = NULL
         dataMatrix1 = NULL
         for (j in 1:nSams) {
-            dataMatrix0 = cbind(dataMatrix0, t(t(as.numeric(as.character(samMatrixDateRes$theta[[j]][, 
-                i])))))
-            dataMatrix1 = cbind(dataMatrix1, t(t(as.numeric(as.character(samMatrixDateRes$gamma[[j]][, 
-                i])))))
+            dataMatrix0 = cbind(dataMatrix0, t(t(as.numeric(as.character(samMatrixDateRes$theta[[j]][,i])))))
+            dataMatrix1 = cbind(dataMatrix1, t(t(as.numeric(as.character(samMatrixDateRes$gamma[[j]][,i])))))
         }
         colnames(dataMatrix0) = SampleIDs
         colnames(dataMatrix1) = SampleIDs
@@ -295,14 +294,16 @@ cumulativeCA = function (file = NULL, Filetype = c("MAF", "VCF"), Pfile = NULL,
             SigIDs[i], ".", AnalCOSMICSigType, ".geneCumulativeContributionAbundance.txt", 
             sep = ""), quote = F, col.names = T, row.names = F, 
             sep = "\t")
-        dataMatrix1 = cbind(t(t(geneIDs)), dataMatrix1)
+        dataMatrix1 = cbind(t(t(geneIDs1)), dataMatrix1)
         colnames(dataMatrix1)[1] = "GeneName"
         write.table(dataMatrix1, file = paste("samplesResults/", 
             SigIDs[i], ".", AnalCOSMICSigType, ".geneRelativeCumulativeContributionAbundance.txt", 
             sep = ""), quote = F, col.names = T, row.names = F, 
             sep = "\t")
     }
-    if (plot && is.null(geneListSortFile)) {
+
+    if (plot && is.null(geneListSortFile))
+	{
         CCAAllFile = paste("samplesResults/", AnalCOSMICSigType, 
             ".geneCumulativeContributionAbundance.txt", sep = "")
         RCCAAllFile = paste("samplesResults/", AnalCOSMICSigType, 
@@ -421,4 +422,5 @@ cumulativeCA = function (file = NULL, Filetype = c("MAF", "VCF"), Pfile = NULL,
             }
         }
     }
+
 }
